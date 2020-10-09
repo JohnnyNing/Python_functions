@@ -21,12 +21,16 @@ def get_random_proxy():
 def proxy_request(request_type, url, **kwargs):
     while 1:
         try:
-            proxy = {'http': get_random_proxy(), 'https': get_random_proxy()}
+            p = get_random_proxy()
+            proxy = {'http': p, 'https': p}
             print('using proxy: {}'.format(proxy))
             req = requests.request(request_type, url, proxies=proxy, timeout=5, **kwargs)
             break
         except Timeout:
             print 'waiting too long'
+        except requests.exceptions.ProxyError:
+            pass
+
     return req
 
 
