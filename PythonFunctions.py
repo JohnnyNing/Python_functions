@@ -1,3 +1,4 @@
+### author: Johnny
 from random import choice
 
 import requests
