@@ -21,7 +21,7 @@ def animate(i):
     y.append(psutil.cpu_percent())
     ax.cla()  # clear out the axis
     ax.plot(x, y)
-    ax.set_xlim(left=max(0, temp - 50), right=temp + 50)
+    ax.set_xlim(left=max(0, temp - 50), right=temp + 50)  # this line set the x-axis limit
 
 
 ani = FuncAnimation(plt.gcf(), animate, interval=100)
