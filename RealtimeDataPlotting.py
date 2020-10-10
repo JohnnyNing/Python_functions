@@ -5,6 +5,8 @@ import psutil
 from matplotlib.animation import FuncAnimation
 
 plt.style.use('fivethirtyeight')
+fig = plt.figure()
+ax = fig.add_subplot(111)
 
 x = []
 y = []
@@ -13,14 +15,14 @@ index = count()
 
 
 def animate(i):
-    x.append(next(index))
-    temp = psutil.cpu_percent()
-    y.append(temp)
-    plt.plot(x, y)
+    temp = next(index)
+    x.append(temp)
+
+    y.append(psutil.cpu_percent())
+    ax.cla()  # clear out the axis
+    ax.plot(x, y)
+    ax.set_xlim(left=max(0, temp - 50), right=temp + 50)
 
 
-ani = FuncAnimation(plt.gcf(), animate, interval=1000)
-
-plt.tight_layout()
-
+ani = FuncAnimation(plt.gcf(), animate, interval=100)
 plt.show()
