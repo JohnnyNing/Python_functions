@@ -14,7 +14,7 @@ def get_random_proxy():
     # get a list of tuple of each items with it's ip_addr and port num
     result = list(map(lambda x: x[0] + ':' + x[1], list(zip(map(lambda x: x.text, soup.findAll('td')[::8]),
                                                             map(lambda x: x.text, soup.findAll('td')[1::8])))))
-    result = choice(map(lambda x: x.encode('ascii'), result)[:30])
+    result = choice(map(lambda x: x.encode('ascii'), result)[:20])
     return result
 
 
@@ -24,13 +24,16 @@ def proxy_request(request_type, url, **kwargs):
             p = get_random_proxy()
             proxy = {'http': p, 'https': p}
             print('using proxy: {}'.format(proxy))
-            req = requests.request(request_type, url, proxies=proxy, timeout=5, **kwargs)
+            req = requests.request(request_type, url, proxies=proxy, timeout=2, **kwargs)
             break
         except Timeout:
             print 'waiting too long'
         except requests.exceptions.ProxyError:
+            print 'Proxy Error, could not connect'
             pass
-
+        except requests.exceptions.HTTPError:
+            print 'request exception HTTP error'
+            pass
     return req
 
 
