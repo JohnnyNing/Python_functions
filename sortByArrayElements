@@ -12,3 +12,15 @@ for row in sorted(rows, key=lambda row: int(row.split()[K])):
 x, y, z, n = (int(input()) for _ in range(4))
 myList = [[i,j,k]  for i in range(x+1) for j in range(y+1) for k in range(z+1) if i+j+k != n ]
 print(myList)
+
+
+
+
+########################## using set find the second largest, and hten use join to print 
+if __name__ == '__main__':
+    records = []
+    for _ in range(0,int(input())):
+        records.append([input(), float(input())])
+
+    second_highest = sorted(list(set([marks for name, marks in records])))[1]
+    print('\n'.join([a for a,b in sorted(records) if b == second_highest]))
