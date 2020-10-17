@@ -1,0 +1,42 @@
+import decimal
+if __name__ == '__main__':
+    records = {}
+    n = int(input())                                                  # indicating how many records are there
+    
+    for _ in range(n):                                                # for loop
+        names, *scores = input().split()                              # names is the string in front of some numbers;    *socres see code below
+        scoreList = list(map(float ,scores))                
+        records[names] = scoreList                                    # putting data into dictionary
+    target =input()
+
+    avg = decimal.Decimal(sum(records[target])/3)                     # decimal needs import
+    print(round(avg,2))                                               # round 2 digets 
+
+
+
+# explaination of the *scores and **keywords
+# suppose the input is in this format:
+# johnny 34.3 21.2 23.4  53 32.1   ========> name, *scores = input.split() will read as: 
+# name = johnny
+# scores = ('34.3', '21.2', '23.4',  '53', '32.1')     ==> it's called reading postional arguments
+#
+# Another Example:
+#
+#
+def foo(*positional, **keywords):
+    print "Positional:", positional
+    print "Keywords:", keywords
+    
+>>> foo('one', 'two', 'three')
+Positional: ('one', 'two', 'three')
+Keywords: {}
+
+
+>>> foo(a='one', b='two', c='three')
+Positional: ()
+Keywords: {'a': 'one', 'c': 'three', 'b': 'two'}
+
+
+>>> foo('one','two',c='three',d='four')
+Positional: ('one', 'two')
+Keywords: {'c': 'three', 'd': 'four'}
