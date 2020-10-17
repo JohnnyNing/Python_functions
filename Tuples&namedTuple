@@ -1,0 +1,88 @@
+#############################################################################################
+>>> # Basic example
+>>> Point = namedtuple('Point', ['x', 'y'])
+>>> p = Point(11, y=22)     # instantiate with positional or keyword arguments
+>>> p[0] + p[1]             # indexable like the plain tuple (11, 22)
+33
+>>> x, y = p                # unpack like a regular tuple
+>>> x, y
+(11, 22)
+>>> p.x + p.y               # fields also accessible by name
+33
+>>> p                       # readable __repr__ with a name=value stylesomenamedtuple._asdict()
+
+Point(x=11, y=22)
+
+#############################################################################################
+classmethod somenamedtuple._make(iterable)
+>>> t = [11, 22]
+>>> Point._make(t)
+Point(x=11, y=22)
+
+
+#############################################################################################
+somenamedtuple._asdict()
+Return a new dict which maps field names to their corresponding values:
+>>> p = Point(x=11, y=22)
+>>> p._asdict()
+{'x': 11, 'y': 22}
+#############################################################################################
+somenamedtuple._replace(**kwargs)
+Return a new instance of the named tuple replacing specified fields with new values:
+>>>
+>>> p = Point(x=11, y=22)
+>>> p = Point(x=11, y=22)
+>>> p._replace(x=33)
+Point(x=33, y=22)
+
+>>> for partnum, record in inventory.items():
+...     inventory[partnum] = record._replace(price=newprices[partnum], timestamp=time.now())
+
+#############################################################################################
+somenamedtuple._fields
+>>> p._fields            # view the field names
+('x', 'y')
+
+>>> Color = namedtuple('Color', 'red green blue')
+>>> Pixel = namedtuple('Pixel', Point._fields + Color._fields)
+>>> Pixel(11, 22, 128, 255, 0)
+Pixel(x=11, y=22, red=128, green=255, blue=0)
+
+#############################################################################################
+somenamedtuple._field_defaults
+Dictionary mapping field names to default values.
+>>> Account = namedtuple('Account', ['type', 'balance'], defaults=[0])
+>>> Account._field_defaults
+{'balance': 0}
+
+>>> Account('premium')
+Account(type='premium', balance=0)
+
+#####################################################################################################
+Converting a dictionary to a named tuple:
+>>> d = {'x':11, 'y':22}
+>>> Point(**d)
+Point(x=11, y=22)
+
+
+
+######################################################################################
+>>> class Point(namedtuple('Point', ['x', 'y'])):
+...     __slots__ = ()
+...     @property
+...     def hypot(self):
+...         return (self.x ** 2 + self.y ** 2) ** 0.5
+...     def __str__(self):
+...         return 'Point: x=%6.3f  y=%6.3f  hypot=%6.3f' % (self.x, self.y, self.hypot)
+
+>>> for p in Point(3, 4), Point(14, 5/7):
+...     print(p)
+Point: x= 3.000  y= 4.000  hypot= 5.000
+Point: x=14.000  y= 0.714  hypot=14.018
+#############################################################################################
+getattr()
+>>> getattr(p,'x')
+11
+
+
+See https://docs.python.org/3/library/collections.html#collections.namedtuple
